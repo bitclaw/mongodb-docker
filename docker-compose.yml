@@ -5,6 +5,14 @@ services:
     image: mongo:3.4
     ports:
       - "27017:27017"
+    expose:
+      # Opens port 27017 on the container
+      - '27017'
+      # Where our data will be persisted
+    volumes:
+      - ./mongo/mongod-entrypoint-scripts:/docker-entrypoint-initdb.d:rw
+      - mongo_volume_db:/var/lib/mysql:rw
+      - ./mongod/mongod.cnf:/etc/mongod/mongod.cnf
     container_name: mongo-dev
     networks:
       mongo_dev_net:
