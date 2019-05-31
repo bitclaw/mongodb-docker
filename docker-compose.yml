@@ -1,0 +1,24 @@
+version: '3.3'
+services:
+  # Mongo Service
+  mongo-dev:
+    image: mongo:3.4
+    ports:
+      - "27017:27017"
+    container_name: mongo-dev
+    networks:
+      mongo_dev_net:
+        ipv4_address: 10.0.0.102
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    security_opt:
+      - 'seccomp:unconfined'
+  mongo-seed:
+    image: mongo:3.4
+    links:
+      - mongodb
+    volumes:
+      - ./seed-data:/seed-data
+    command: 'bash -c "mongoimport --host mongodb --type json --file /seed-data/projects.json --jsonArray"'
