@@ -23,13 +23,6 @@ services:
       MONGO_INITDB_ROOT_PASSWORD: example
     security_opt:
       - 'seccomp:unconfined'
-  mailhog:
-    container_name: mailhog
-    image: mailhog/mailhog
-    restart: always
-    ports:
-      - 1025:1025
-      - 8025:8025
   mongo-seed:
     image: mongo:3.4
     links:
